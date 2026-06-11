@@ -1,11 +1,11 @@
-# pi-retry
+# @furkanbilgin/pi-retry
 
 Auto-retry Pi extension — automatically recovers when provider errors occur mid-conversation (e.g. `Error: 400 Error from provider (Xiaomi): Request Error`). Sends `"Go on"` with exponential backoff instead of forcing you to notice the error and re-prompt.
 
 ## Install
 
 ```bash
-pi install git:github.com/furkan-bilgin/pi-retry
+pi install npm:@furkanbilgin/pi-retry
 /reload
 ```
 

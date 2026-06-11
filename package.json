@@ -1,6 +1,6 @@
 {
-  "name": "pi-retry",
-  "version": "0.1.0",
+  "name": "@furkanbilgin/pi-retry",
+  "version": "0.1.1",
   "description": "Auto-retry Pi extension — automatically recovers from transient provider errors (400, 5xx, rate limits, connection failures) mid-conversation by sending a continuation prompt with exponential backoff",
   "type": "module",
   "private": false,
@@ -29,17 +29,17 @@
   ],
   "author": {
     "name": "Furkan",
-    "url": "https://github.com/furkan"
+    "url": "https://github.com/furkan-bilgin"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/furkan/pi-retry.git"
+    "url": "git+https://github.com/furkan-bilgin/pi-retry.git"
   },
   "bugs": {
-    "url": "https://github.com/furkan/pi-retry/issues"
+    "url": "https://github.com/furkan-bilgin/pi-retry/issues"
   },
-  "homepage": "https://github.com/furkan/pi-retry#readme",
+  "homepage": "https://github.com/furkan-bilgin/pi-retry#readme",
   "pi": {
     "extensions": [
       "./index.ts"
