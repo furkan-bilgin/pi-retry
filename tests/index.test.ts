@@ -225,7 +225,7 @@ describe("extension factory", () => {
 			expect(mock.captured.notifications[0].text).toMatch(/continuing/i);
 		});
 
-		it("retries when assistant content contains provider error text", async () => {
+		it("retries when assistant errorMessage matches a pattern", async () => {
 			const startHandler = mock.captured.events.get("before_agent_start")![0];
 			const endHandler = mock.captured.events.get("agent_end")![0];
 			const ctx = createMockContext(mock.captured.notifications);
@@ -236,12 +236,7 @@ describe("extension factory", () => {
 				makeUserMessage("Hello"),
 				makeAssistantMessage({
 					stopReason: "stop",
-					content: [
-						{
-							type: "text",
-							text: "Error: 400 Error from provider (Xiaomi): Request Error",
-						},
-					],
+					errorMessage: "Error from provider: 400 Bad Request",
 				}),
 			], ctx);
 

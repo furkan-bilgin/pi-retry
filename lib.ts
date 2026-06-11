@@ -67,18 +67,14 @@ export function isProviderError(
 ): boolean {
 	if (msg.role !== "assistant") return false;
 
-	// Check stopReason
+	// A real provider error always sets stopReason to "error" and
+	// optionally an errorMessage.  Checking assistant text content
+	// for error-like words causes false positives when the assistant
+	// innocently mentions an earlier error (e.g. "the 400 Error from
+	// provider was transient").
 	if (msg.stopReason === "error") return true;
 
-	// Check errorMessage field
 	if (msg.errorMessage && matchesAny(msg.errorMessage, patterns)) return true;
-
-	// Check text content
-	if (Array.isArray(msg.content)) {
-		for (const part of msg.content) {
-			if (part.type === "text" && matchesAny(part.text, patterns)) return true;
-		}
-	}
 
 	return false;
 }

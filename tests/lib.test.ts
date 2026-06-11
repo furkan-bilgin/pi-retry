@@ -134,7 +134,9 @@ describe("isProviderError", () => {
 		expect(isProviderError(msg, patterns)).toBe(true);
 	});
 
-	it("returns true when content text matches a pattern", () => {
+	it("does NOT match when content merely mentions an error (only stopReason and errorMessage are reliable)", () => {
+		// The assistant innocently describing an earlier error should not
+		// trigger a retry — only stopReason "error" and errorMessage do.
 		const msg = makeAssistantMessage({
 			stopReason: "stop",
 			content: [
@@ -144,7 +146,7 @@ describe("isProviderError", () => {
 				},
 			],
 		});
-		expect(isProviderError(msg, patterns)).toBe(true);
+		expect(isProviderError(msg, patterns)).toBe(false);
 	});
 
 	it("returns false for a normal assistant message", () => {
@@ -198,31 +200,16 @@ describe("isProviderError", () => {
 		expect(isProviderError(msg, patterns)).toBe(false);
 	});
 
-	it("detects error embedded in thinking content (not text)", () => {
-		// Only text parts are checked; thinking parts should be ignored
+	it("does not match assistant content that merely mentions an error", () => {
+		// The assistant talking about an earlier error should NOT trigger a
+		// retry — only stopReason "error" and errorMessage are reliable signals.
 		const msg = makeAssistantMessage({
 			stopReason: "stop",
 			content: [
-				{ type: "thinking", thinking: "Error from provider here" },
-				{ type: "text", text: "Let me fix that." },
+				{ type: "text", text: "The 400 Error from provider was transient, fixed now." },
 			],
 		});
-		// The error text is in thinking, not text content — should not match
 		expect(isProviderError(msg, patterns)).toBe(false);
-	});
-
-	it("detects error in text content even when thinking is also present", () => {
-		const msg = makeAssistantMessage({
-			stopReason: "stop",
-			content: [
-				{ type: "thinking", thinking: "thinking..." },
-				{
-					type: "text",
-					text: "Error from provider: 400 Bad Request",
-				},
-			],
-		});
-		expect(isProviderError(msg, patterns)).toBe(true);
 	});
 
 	it("handles messages with empty content array", () => {
