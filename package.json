@@ -1,0 +1,51 @@
+{
+  "name": "pi-retry",
+  "version": "0.1.0",
+  "description": "Auto-retry Pi extension — automatically recovers from transient provider errors (400, 5xx, rate limits, connection failures) mid-conversation by sending a continuation prompt with exponential backoff",
+  "type": "module",
+  "private": false,
+  "main": "index.ts",
+  "files": [
+    "index.ts",
+    "lib.ts",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "bun test",
+    "test:watch": "bun test --watch"
+  },
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-coding-agent",
+    "retry",
+    "auto-retry",
+    "provider-error",
+    "resilience",
+    "continuation",
+    "error-recovery"
+  ],
+  "author": {
+    "name": "Furkan",
+    "url": "https://github.com/furkan"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furkan/pi-retry.git"
+  },
+  "bugs": {
+    "url": "https://github.com/furkan/pi-retry/issues"
+  },
+  "homepage": "https://github.com/furkan/pi-retry#readme",
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  }
+}
