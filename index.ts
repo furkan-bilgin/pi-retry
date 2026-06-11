@@ -81,6 +81,19 @@ export default function (pi: ExtensionAPI) {
 		if (!lastUserMessage) return;
 		if (retryCount >= CONFIG.maxRetries) return;
 
+		// Never retry when the user manually aborted (pressed Escape).
+		// The stopReason is "aborted" on the assistant message, and the
+		// errorMessage or text content may contain "aborted".
+		const wasAborted = event.messages.some(
+			(msg) =>
+				(msg.role === "assistant" && msg.stopReason === "aborted") ||
+				(msg as { errorMessage?: string }).errorMessage?.toLowerCase().includes("aborted"),
+		);
+		if (wasAborted) {
+			retryCount = 0;
+			return;
+		}
+
 		const patterns = CONFIG.errorPatterns;
 
 		// Detect provider errors in assistant messages
