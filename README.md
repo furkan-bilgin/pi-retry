@@ -1,6 +1,11 @@
 # @furkanbilgin/pi-retry
 
-Auto-retry Pi extension — automatically recovers when provider errors occur mid-conversation (e.g. `Error: 400 Error from provider (Xiaomi): Request Error`). Sends `"Go on"` with exponential backoff instead of forcing you to notice the error and re-prompt.
+Auto-retry Pi extension. Automatically recovers when provider errors occur mid-conversation (e.g. `Error: 400 Error from provider (Xiaomi): Request Error`). Sends `"Go on"` with exponential backoff instead of forcing you to notice the error and re-prompt.
+
+## The Why
+Xiaomi MiMo frequently gives me 400 errors out of the blue. (Maybe OpenCode Go's fault, but I wouldn't blame them. I LOVE them.)
+
+I used to just write "Go on" or "Continue" by hand but it got boring after a while.
 
 ## Install
 
