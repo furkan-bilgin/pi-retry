@@ -411,6 +411,24 @@ describe("extension factory", () => {
 			expect(notif?.text).toMatch(/\b1\/3\b/);
 		});
 
+		it("does NOT retry on timeout (Pi handles those internally)", async () => {
+			const startHandler = mock.captured.events.get("before_agent_start")![0];
+			const endHandler = mock.captured.events.get("agent_end")![0];
+			const ctx = createMockContext(mock.captured.notifications);
+
+			await startHandler({ prompt: "Hello", images: [] }, ctx);
+
+			await fireEnd(endHandler, [
+				makeUserMessage("Hello"),
+				makeAssistantMessage({
+					stopReason: "error",
+					errorMessage: "Request timed out",
+				}),
+			], ctx);
+
+			expect(mock.captured.sentMessages.length).toBe(0);
+		});
+
 		it("does NOT retry on user abort (stopReason 'aborted')", async () => {
 			const startHandler = mock.captured.events.get("before_agent_start")![0];
 			const endHandler = mock.captured.events.get("agent_end")![0];

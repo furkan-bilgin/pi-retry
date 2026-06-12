@@ -22,6 +22,8 @@ When the agent hits a transient provider error, the extension sends `"Go on"` as
 
 Edit `retryPrompt` or `maxRetries` etc. in `lib.ts` → `DEFAULT_CONFIG`, then run `/reload`.
 
+Only matches errors Pi doesn't retry natively: `Error from provider`, `Provider Error`, `Request Error`, and 4xx errors (excluding 429 which Pi handles).
+
 ## Commands
 
 | Command | Description |

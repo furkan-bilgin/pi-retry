@@ -15,19 +15,10 @@ export const DEFAULT_CONFIG = {
 	 */
 	errorPatterns: [
 		/Error from provider/i,
-		/\b4\d{2}\s+Error\b/,
-		/\b5\d{2}\s+Error\b/,
 		/Provider.*Error/i,
 		/Request Error/i,
-		/rate limit/i,
-		/too many requests/i,
-		/service unavailable/i,
-		/bad gateway/i,
-		/gateway timeout/i,
-		/upstream connect error/i,
-		/connection refused/i,
-		/connection timeout/i,
-		/internal server error/i,
+		// 4xx errors excluding 429 (which Pi retries natively)
+		/\b4(?!29)\d{2}\s+Error\b/,
 	],
 	/**
 	 * When true, retries even when no assistant message was produced

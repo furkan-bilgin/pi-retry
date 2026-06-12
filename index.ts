@@ -94,6 +94,18 @@ export default function (pi: ExtensionAPI) {
 			return;
 		}
 
+		// Never retry on timeouts — Pi has its own built-in retry for those.
+		const wasTimeout = event.messages.some(
+			(msg) =>
+				(msg as { errorMessage?: string }).errorMessage
+					?.toLowerCase()
+					.includes("timed out"),
+		);
+		if (wasTimeout) {
+			retryCount = 0;
+			return;
+		}
+
 		const patterns = CONFIG.errorPatterns;
 
 		// Detect provider errors in assistant messages

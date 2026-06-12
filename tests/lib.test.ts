@@ -60,24 +60,40 @@ describe("matchesAny", () => {
 		expect(matchesAny("400 Error from provider", patterns)).toBe(true);
 	});
 
-	it("returns true for 502 Error", () => {
-		expect(matchesAny("502 Error: Bad Gateway", patterns)).toBe(true);
+	it("returns true for Provider Error", () => {
+		expect(matchesAny("Provider Error: something", patterns)).toBe(true);
 	});
 
-	it("returns true for rate limit", () => {
-		expect(matchesAny("Rate limit exceeded", patterns)).toBe(true);
+	it("returns true for Request Error", () => {
+		expect(matchesAny("Request Error: bad input", patterns)).toBe(true);
 	});
 
-	it("returns true for connection refused", () => {
-		expect(matchesAny("Connection refused", patterns)).toBe(true);
+	it("matches 401 Error (4xx, not 429)", () => {
+		expect(matchesAny("401 Error: Unauthorized", patterns)).toBe(true);
 	});
 
-	it("returns true for service unavailable", () => {
-		expect(matchesAny("Service Unavailable", patterns)).toBe(true);
+	it("does NOT match 429 Error (Pi handles that natively)", () => {
+		expect(matchesAny("429 Error: Too Many Requests", patterns)).toBe(false);
 	});
 
-	it("returns true for internal server error", () => {
-		expect(matchesAny("Internal Server Error", patterns)).toBe(true);
+	it("does NOT match 502 Error (Pi handles 5xx natively)", () => {
+		expect(matchesAny("502 Error: Bad Gateway", patterns)).toBe(false);
+	});
+
+	it("does NOT match rate limit (Pi handles that natively)", () => {
+		expect(matchesAny("Rate limit exceeded", patterns)).toBe(false);
+	});
+
+	it("does NOT match connection refused (Pi handles that natively)", () => {
+		expect(matchesAny("Connection refused", patterns)).toBe(false);
+	});
+
+	it("does NOT match service unavailable (Pi handles that natively)", () => {
+		expect(matchesAny("Service Unavailable", patterns)).toBe(false);
+	});
+
+	it("does NOT match internal server error (Pi handles that natively)", () => {
+		expect(matchesAny("Internal Server Error", patterns)).toBe(false);
 	});
 
 	it("returns false for normal text", () => {
@@ -90,7 +106,7 @@ describe("matchesAny", () => {
 
 	it("matches case-insensitively", () => {
 		expect(matchesAny("ERROR FROM PROVIDER", patterns)).toBe(true);
-		expect(matchesAny("Rate LIMIT", patterns)).toBe(true);
+		expect(matchesAny("REQUEST ERROR", patterns)).toBe(true);
 	});
 
 	it("does not match standalone numbers like 400 or 200", () => {
