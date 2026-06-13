@@ -1,6 +1,6 @@
 {
   "name": "@furkanbilgin/pi-retry",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Auto-retry Pi extension — automatically recovers from transient provider errors (400, 5xx, rate limits, connection failures) mid-conversation by sending a continuation prompt with exponential backoff",
   "type": "module",
   "private": false,
